@@ -51,26 +51,37 @@ function getTime(date) {
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
 function getDayName(date) {
-  const data1 = new Date(date);
-  const day = data1.getUTCDay();
-  switch (day) {
-    case 0:
-      return 'Sunday';
-    case 1:
-      return 'Monday';
-    case 2:
-      return 'Tuesday';
-    case 3:
-      return 'Wednesday';
-    case 4:
-      return 'Thursday';
-    case 5:
-      return 'Friday';
-    case 6:
-      return 'Saturday';
-    default:
-      return undefined;
-  }
+  const dateNew = new Date(date);
+  // const day = dateNew.getUTCDay();
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  return days[dateNew.getUTCDay()];
+
+  // switch (day) {
+  //   case 0:
+  //     return 'Sunday';
+  //   case 1:
+  //     return 'Monday';
+  //   case 2:
+  //     return 'Tuesday';
+  //   case 3:
+  //     return 'Wednesday';
+  //   case 4:
+  //     return 'Thursday';
+  //   case 5:
+  //     return 'Friday';
+  //   case 6:
+  //     return 'Saturday';
+  //   default:
+  //     return undefined;
+  // }
 }
 
 /**
