@@ -155,10 +155,10 @@ function getCountDaysOnPeriod(dateStart, dateEnd) {
  * '2024-02-10', { start: '2024-02-02', end: '2024-03-02' } => true
  */
 function isDateInPeriod(date, period) {
-  const dateToCheck = new Date(date);
+  const targetDate = new Date(date);
   const startDate = new Date(period.start);
   const endDate = new Date(period.end);
-  return dateToCheck >= startDate && dateToCheck <= endDate;
+  return targetDate >= startDate && targetDate <= endDate;
 }
 
 /**
@@ -174,7 +174,8 @@ function isDateInPeriod(date, period) {
  */
 function formatDate(date) {
   const newDate = new Date(date);
-  return newDate.toLocaleString('en-US', { timeZone: 'UTC' });
+  const formattedDate = newDate.toLocaleString('en-US', { timeZone: 'UTC' });
+  return formattedDate;
 }
 
 /**
@@ -190,15 +191,15 @@ function formatDate(date) {
  * 1, 2024 => 8
  */
 function getCountWeekendsInMonth(month, year) {
-  let countWeekends = 0;
+  let restDays = 0;
   const totalDays = new Date(year, month, 0).getDate();
   for (let day = 1; day <= totalDays; day += 1) {
-    const currentDate = new Date(year, month - 1, day);
-    if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
-      countWeekends += 1;
+    const curDate = new Date(year, month - 1, day);
+    if (curDate.getDay() === 0 || curDate.getDay() === 6) {
+      restDays += 1;
     }
   }
-  return countWeekends;
+  return restDays;
 }
 
 /**
@@ -257,14 +258,13 @@ function getNextFridayThe13th(date) {
  * Date(2024, 10, 10) => 4
  */
 function getQuarter(date) {
-  const month = date.getMonth();
-  if (month >= 0 && month <= 2) {
+  if (date.getMonth() >= 0 && date.getMonth() <= 2) {
     return 1;
   }
-  if (month >= 3 && month <= 5) {
+  if (date.getMonth() >= 3 && date.getMonth() <= 5) {
     return 2;
   }
-  if (month >= 6 && month <= 8) {
+  if (date.getMonth() >= 6 && date.getMonth() <= 8) {
     return 3;
   }
   return 4;
@@ -304,8 +304,13 @@ function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
  * Date(2022, 2, 1) => false
  * Date(2020, 2, 1) => true
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const year = new Date(date).getFullYear();
+  if (year % 400 === 0) return true;
+  if (year % 4 === 0 && year % 100 !== 0) {
+    return true;
+  }
+  return false;
 }
 
 module.exports = {
