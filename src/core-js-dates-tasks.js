@@ -96,19 +96,10 @@ function getDayName(date) {
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
 function getNextFriday(date) {
-  const week = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
   const day = new Date(date);
-  day.setDate(day.getDate() + 1);
-  while (week[day.getDay()] !== 'Friday') {
-    day.setDate(day.getDate() + 1);
+  day.setUTCDate(day.getUTCDate() + 1);
+  while (day.getUTCDay() !== 5) {
+    day.setUTCDate(day.getUTCDate() + 1);
   }
   return day;
 }
